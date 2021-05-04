@@ -1,55 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import Form from './components/Form';
+import List from './components/List';
+import reducer, { ACTION_TYPES, filteredList } from './Store';
+
 
 function App() {
-  return (
-    <div className="wrapper">
-      <div>
-        <h1>Список дел</h1>
-        <h2>Лабораторная №4. Осваиваем Redux</h2>
-      </div>
-      <div>
-        <input type="text" />
-        <button>Добавить</button>
-        <div>
-          Фильтр:
-          <input />
-          <select>
-            <option>Все</option>
-            <option>Выполненные</option>
-            <option>Невыполненные</option>
-          </select>
-        </div>
-        <ul>
-          <li>
-            <input type="checkbox" checked />
-            Завести рыб
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" checked />
-            Поиграть в шахматы под водой
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Покормить рыб
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Выгулять картошку
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Полить кошку
-            <button>[x]</button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
-}
+  const [list, setList] = useState([]);
+  const [mark, setMark] = useState(false);
 
-export default App;
+    function dispatch(action) {
+        const newList = reducer(action, list);
+        setList(newList);
+    }
+
+    return (
+        <>
+            <div>
+                <h1>Список делов</h1>
+                <h2>Лабораторная №3. Список с фильтрацией</h2>
+            </div>
+            <Form
+                handleSubmit={value =>
+                    dispatch({
+                        type: ACTION_TYPES.ADD,
+                        payload: value
+                    })
+                }
+
+            />
+            <div>
+                <label>
+                    Done:
+                    <input checked={mark} onChange={() => setMark(!mark)} type="checkbox" />
+                </label>
+            </div>
+            <List list={filteredList({ list, mark })} dispatch={dispatch} />
+        </>
+    );
+}
+export default App; 
+
+  /*function add(value) {
+    const newEl = {
+      id: Math.random().toString(),
+      text: value,
+      isChecked: false
+    };
+    setList([...list, newEl]);
+  }
+
+  function del(index) {
+    list.splice(index, 1);
+    setList([...list]);
+  }
+
+  return (
+      <>
+        <h3>Список делов</h3>
+        <Form handleSubmit={value => add(value)} />
+        <List list={list} deleteHandler={index => del(index)} />
+      </>
+  );
+
+
+
+              /*<List list={filteredList({ list, mark })} dispatch={dispatch} />
+}*/
+
+
