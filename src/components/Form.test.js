@@ -23,11 +23,11 @@ test('Checked form', () => {
 test('Checked validation', () => {
   const value = '';
   const handleSubmit = jest.fn();
-  render(<Form handleSubmit={handleSubmit}/>);
+  render(<Form handleSubmit={handleSubmit} />);
   const input = screen.getByTestId('input');
   fireEvent.input(input, {
     target: {
       value: value
     }
   });
-})
+});
