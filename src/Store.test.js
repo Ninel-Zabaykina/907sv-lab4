@@ -69,20 +69,4 @@ describe('Check  Store.js', () => {
     expect(filList.length).toEqual(1);
     expect(filList[0].id).toEqual(list[1].id);
   });
-
-  test('Check edit function', () => {
-    const addAction = {
-      type: ACTION_TYPES.ADD,
-      payload: title
-    };
-
-    let list = reducer(addAction, []);
-    const editAction = {
-      type: ACTION_TYPES.EDIT,
-      payload: title
-    };
-
-    list = reducer(editAction, list);
-    expect(list[1]).not.toBe(title);
-  });
 });

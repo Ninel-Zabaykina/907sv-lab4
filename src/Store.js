@@ -1,7 +1,6 @@
 export const ACTION_TYPES = {
   ADD: 'add',
   DELETE: 'del',
-  EDIT: 'edit',
   CHECKED: 'checked',
   FILTER: 'filter'
 };
@@ -24,16 +23,7 @@ export default function reducer(action, prevState = initialState) {
     case ACTION_TYPES.DELETE: {
       return [...prevState.filter(list => list.id !== action.payload)];
     }
-    case ACTION_TYPES.EDIT: {
-      return [
-        ...prevState.map(function (list) {
-          if (list.id === action.payload.id) {
-            return { ...list, text: action.payload.text };
-          }
-          return list;
-        })
-      ];
-    }
+
     case ACTION_TYPES.CHECKED: {
       return [
         ...prevState.map(function (list) {

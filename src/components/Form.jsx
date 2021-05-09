@@ -5,6 +5,7 @@ export default function Form({ handleSubmit }) {
 
   function handleSubmitInner(e) {
     e.preventDefault();
+    if (value === '') return;
     handleSubmit(value);
     setValue('');
   }
