@@ -4,13 +4,42 @@ export const ACTION_TYPES = {
   CHECKED: 'checked',
   FILTER: 'filter'
 };
-export const initialState = [];
 
-/**
- * @param {type: string, payload: any} action
- * @param prevState
- */
-export default function reducer(action, prevState = initialState) {
+export interface IActionAdd {
+  type: typeof ACTION_TYPES.ADD;
+  payload: string;
+}
+
+export interface IActionDel {
+  type: typeof ACTION_TYPES.DELETE;
+  payload: string;
+}
+
+export interface IActionCheck {
+  type: typeof ACTION_TYPES.CHECKED;
+  payload: string;
+}
+
+export interface IActionFilter {
+  type: typeof ACTION_TYPES.FILTER;
+}
+
+export interface Item {
+  id: string;
+  title: string;
+  isChecked: boolean;
+}
+
+export type IAction = IActionAdd | IActionDel | IActionCheck | IActionFilter;
+
+export type State = { list: Item[]; Filter: boolean; searchBar: string };
+
+export const initialState: { Filter: boolean; list: any[] } = {
+  list: [],
+  Filter: false
+};
+
+export const reducer = function (action: IAction, prevState = initialState): State {
   switch (action.type) {
     case ACTION_TYPES.ADD: {
       const newEl = {
@@ -35,14 +64,21 @@ export default function reducer(action, prevState = initialState) {
       ];
     }
     case ACTION_TYPES.FILTER: {
-      return { ...prevState, isFiltered: !filteredList().isFiltered };
+      return { ...prevState, isChecked: !filteredList().isChecked };
     }
     default:
       return [...prevState];
   }
 }
 
-export function filteredList({ list, mark }) {
+const filteredListSelector = state => {
+  if (state.filterChecked) {
+    return state.list.filter(item => item.isChecked);
+  }
+  return state.list;
+}
+
+export function filteredList(list, mark) {
   if (!mark) return list;
 
   return list.filter(list => list.isChecked);
