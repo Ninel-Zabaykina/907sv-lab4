@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ACTION_TYPES } from '../Store';
 
-export default function Form({ handleSubmit }) {
+export default function Form() {
   const [value, setValue] = useState('');
+  const dispatch = useDispatch();
 
   function handleSubmitInner(e) {
     e.preventDefault();
     if (value === '') return;
-    handleSubmit(value);
     setValue('');
+
+    dispatch({
+      type: ACTION_TYPES.ADD,
+      payload: value
+    });
   }
   return (
     <form data-testid="form" onSubmit={handleSubmitInner}>

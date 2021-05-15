@@ -1,17 +1,14 @@
 import React from 'react';
 import { ACTION_TYPES } from '../Store';
+import { useDispatch } from 'react-redux';
 
-export default function ListItem({ title, id, dispatch, isChecked }) {
+export default function ListItem({ title, id, isChecked }) {
+  const dispatch = useDispatch();
   return (
     <li>
       <input
         defaultChecked={isChecked}
-        onChange={() =>
-          dispatch({
-            type: ACTION_TYPES.CHECKED,
-            payload: id
-          })
-        }
+        onChange={() => dispatch({ type: ACTION_TYPES.CHECKED, payload: id })}
         data-testid="checkbox"
         type="checkbox"
       />

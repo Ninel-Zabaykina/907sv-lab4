@@ -1,20 +1,17 @@
 import ListItem from './ListItem';
 import React from 'react';
+import filteredListSelector from '../Store';
+import { useSelector } from 'react-redux';
 
-export default function List({ list, dispatch }) {
-  if (list.length === 0) {
+export default function List() {
+  const state = useSelector(filteredListSelector);
+  if (state.list.length === 0) {
     return 'List is empty';
   }
   return (
     <ul>
-      {list.map(item => (
-        <ListItem
-          id={item.id}
-          key={item.id}
-          title={item.title}
-          isChecked={item.isChecked}
-          dispatch={dispatch}
-        />
+      {state.list.map(item => (
+        <ListItem id={item.id} key={item.id} title={item.title} isChecked={item.isChecked} />
       ))}
     </ul>
   );
