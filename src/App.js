@@ -10,10 +10,6 @@ function App() {
   const [mark, setMark] = useState(false);
 
   const dispatch = useDispatch();
-  /*function dispatch(action) {
-    const newList = reducer(action, list);
-    setList(newList);
-  }*/
 
   return (
     <>
@@ -35,7 +31,7 @@ function App() {
           <input checked={mark} onChange={() => setMark(!mark)} type="checkbox" />
         </label>
       </div>
-      <List list={list} dispatch={ACTION_TYPES.CHECKED} />
+      <List list={list} dispatch={ACTION_TYPES.FILTER} />
     </>
   );
 }

@@ -21,21 +21,27 @@ export default function reducer(prevState = initialState, action) {
         title: action.payload,
         isChecked: false
       };
-      return [...prevState, newEl];
+      return { ...prevState, list: [...prevState.list, newEl] };
     }
     case ACTION_TYPES.DELETE: {
-      return [...prevState.filter(list => list.id !== action.payload)];
+      return {
+        ...prevState,
+        list: [...prevState.list.filter(list => list.id !== action.payload)]
+      };
     }
 
     case ACTION_TYPES.CHECKED: {
-      return [
-        ...prevState.map(function (list) {
-          if (list.id === action.payload) {
-            return { ...list, isChecked: !list.isChecked };
-          }
-          return list;
-        })
-      ];
+      return {
+        ...prevState,
+        list: [
+          ...prevState.list.map(function (list) {
+            if (list.id === action.payload) {
+              return { ...list, isChecked: !list.isChecked };
+            }
+            return list;
+          })
+        ]
+      };
     }
     case ACTION_TYPES.FILTER: {
       return { ...prevState, isChecked: !filteredList().isChecked };

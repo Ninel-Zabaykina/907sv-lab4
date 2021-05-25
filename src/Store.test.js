@@ -1,19 +1,25 @@
-import reducer, { ACTION_TYPES, filteredList } from './store';
+import reducer, { ACTION_TYPES, filteredList, initialState } from './store';
 import ListItem from './components/ListItem';
 
 const title = 'ListItem';
+const add = content => ({
+  type: ACTION_TYPES.ADD,
+  payload: content
+});
 
 describe('Check  Store.js', () => {
   test('Check add function', () => {
-    const action = {
+    const text = 'fig';
+    const expectedAction = {
       type: ACTION_TYPES.ADD,
-      payload: title
+      payload: text
     };
-    const newList = reducer(action, []);
+    expect(add(text)).toEqual(expectedAction);
+    const newList = reducer(add(text), initialState);
 
-    expect(newList.length).toEqual(1);
+    expect(newList.list).toHaveLength(1);
     expect(newList[0]).toHaveProperty('id');
-    expect(newList[0].title).toEqual(title);
+    expect(newList[0].title).toEqual(text);
   });
 
   test('Check delete function', () => {
@@ -37,7 +43,7 @@ describe('Check  Store.js', () => {
   test('Check checked function', () => {
     const addAction = {
       type: ACTION_TYPES.ADD,
-      payload: ListItem
+      payload: title
     };
 
     let list = reducer(addAction, []);
@@ -59,11 +65,11 @@ describe('Check  Store.js', () => {
     let list = reducer(addAction, []);
     list = reducer(addAction, list);
 
-    const checkedAction = {
+    const checkAction = {
       type: ACTION_TYPES.CHECKED,
       payload: list[1].id
     };
-    list = reducer(checkedAction, list);
+    list = reducer(checkAction, list);
 
     const filList = filteredList({ list: list, mark: true });
     expect(filList.length).toEqual(1);
