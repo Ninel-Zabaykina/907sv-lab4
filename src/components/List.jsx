@@ -1,9 +1,10 @@
 import ListItem from './ListItem';
 import React from 'react';
-import { filteredListSelector } from '../Store';
+import { filteredListSelector } from '../Selectors';
 import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
-export default function List() {
+function List() {
   const state = useSelector(filteredListSelector);
   if (state.length === 0) {
     return 'List is empty';
@@ -16,3 +17,9 @@ export default function List() {
     </ul>
   );
 }
+
+const mapStateToProps = state => {
+  return { state };
+};
+
+export default connect(mapStateToProps, null)(List);

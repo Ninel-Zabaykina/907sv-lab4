@@ -1,8 +1,9 @@
 import React from 'react';
 import { ACTION_TYPES } from '../Store';
 import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 
-export default function ListItem({ title, id, isChecked }) {
+function ListItem({ title, id, isChecked }) {
   const dispatch = useDispatch();
   return (
     <>
@@ -31,3 +32,5 @@ export default function ListItem({ title, id, isChecked }) {
     </>
   );
 }
+
+export default connect(null, null)(ListItem);

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ACTION_TYPES } from '../Store';
+import { connect } from 'react-redux';
 
-export default function Form() {
+function Form() {
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
 
@@ -23,3 +24,5 @@ export default function Form() {
     </form>
   );
 }
+
+export default connect(null, null)(Form);

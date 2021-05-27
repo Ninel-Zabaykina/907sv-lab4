@@ -9,6 +9,8 @@ export const initialState = {
   filterChecked: false
 };
 
+export const SET_FILTER = 'SET_FILTER';
+
 /**
  * @param {type: string, payload: any} action
  * @param prevState
@@ -47,7 +49,7 @@ export default function reducer(prevState = initialState, action) {
       return { ...prevState, isChecked: !filteredList().isChecked };
     }
     default:
-      return { ...prevState };
+      return prevState;
   }
 }
 
@@ -57,9 +59,11 @@ export function filteredList(list, mark) {
   return list.filter(list => list.isChecked);
 }
 
-export const filteredListSelector = state => {
+export const setFilter = filter => ({ type: SET_FILTER, payload: { filter } });
+
+/*export const filteredListSelector = state => {
   if (state.filterChecked) {
     return state.list.filter(item => item.isChecked);
   }
   return state.list;
-};
+};*/
