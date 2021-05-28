@@ -18,6 +18,7 @@ export const SET_FILTER = 'SET_FILTER';
 export default function reducer(prevState = initialState, action) {
   switch (action.type) {
     case ACTION_TYPES.ADD: {
+      console.log(action);
       const newEl = {
         id: Math.random().toString(),
         title: action.payload,
@@ -26,6 +27,7 @@ export default function reducer(prevState = initialState, action) {
       return { ...prevState, list: [...prevState.list, newEl] };
     }
     case ACTION_TYPES.DELETE: {
+      console.log(action);
       return {
         ...prevState,
         list: [...prevState.list.filter(list => list.id !== action.payload)]
@@ -33,6 +35,7 @@ export default function reducer(prevState = initialState, action) {
     }
 
     case ACTION_TYPES.CHECKED: {
+      console.log(action);
       return {
         ...prevState,
         list: [
@@ -46,7 +49,14 @@ export default function reducer(prevState = initialState, action) {
       };
     }
     case ACTION_TYPES.FILTER: {
-      return { ...prevState, isChecked: !filteredList().isChecked };
+      console.log(action);
+      return {
+        ...prevState,
+        list: [
+          ...prevState.list.filter(item => action.payload || (!action.payload && item.isChecked))
+        ]
+      };
+      // return { ...prevState, isChecked: !filteredList().isChecked };
     }
     default:
       return prevState;

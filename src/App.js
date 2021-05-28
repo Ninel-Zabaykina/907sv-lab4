@@ -6,10 +6,21 @@ import { ACTION_TYPES } from './Store';
 import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
-  const list = useSelector(prevState => prevState);
+  const list = useSelector(state => state);
   const [mark, setMark] = useState(false);
+  const handleMark = () => {
+    setMark(!mark);
+    dispatch({
+      type: ACTION_TYPES.FILTER,
+      payload: mark
+    });
+  };
 
   const dispatch = useDispatch();
+
+  function Done() {
+    return <input checked={mark} onChange={handleMark} type="checkbox" />;
+  }
 
   return (
     <>
@@ -28,7 +39,7 @@ function App() {
       <div>
         <label>
           Done:
-          <input checked={mark} onChange={() => setMark(!mark)} type="checkbox" />
+          <Done />
         </label>
       </div>
       <List list={list} dispatch={ACTION_TYPES.FILTER} />

@@ -1,25 +1,28 @@
 import ListItem from './ListItem';
-import React from 'react';
-import { filteredListSelector } from '../Selectors';
+// import React, { useState } from 'react';
+//import { filteredListSelector } from '../Selectors';
 import { useSelector } from 'react-redux';
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 
-function List() {
-  const state = useSelector(filteredListSelector);
-  if (state.length === 0) {
+export default function List() {
+  const list = useSelector(state => state.list);
+  // const [mark] = useState(false);
+  if (list.length === 0) {
     return 'List is empty';
   }
   return (
     <ul>
-      {state.map(item => (
-        <ListItem id={item.id} key={item.id} title={item.title} isChecked={item.isChecked} />
-      ))}
+      {list
+        // .filter(item => (item.isChecked && mark) || !mark)
+        .map(item => (
+          <ListItem id={item.id} key={item.id} title={item.title} isChecked={item.isChecked} />
+        ))}
     </ul>
   );
 }
 
-const mapStateToProps = state => {
+/*const mapStateToProps = state => {
   return { state };
 };
 
-export default connect(mapStateToProps, null)(List);
+export default connect(mapStateToProps, null)(List);*/
