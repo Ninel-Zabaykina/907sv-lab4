@@ -50,30 +50,18 @@ export default function reducer(prevState = initialState, action) {
     }
     case ACTION_TYPES.FILTER: {
       console.log(action);
-      return {
-        ...prevState,
-        list: [
-          ...prevState.list.filter(item => action.payload || (!action.payload && item.isChecked))
-        ]
-      };
-      // return { ...prevState, isChecked: !filteredList().isChecked };
+      return { ...prevState, filterChecked: !prevState.filterChecked };
     }
     default:
       return prevState;
   }
 }
 
-export function filteredList(list, mark) {
-  if (!mark) return list;
-
-  return list.filter(list => list.isChecked);
-}
-
 export const setFilter = filter => ({ type: SET_FILTER, payload: { filter } });
 
-/*export const filteredListSelector = state => {
+export const filteredListSelector = state => {
   if (state.filterChecked) {
     return state.list.filter(item => item.isChecked);
   }
   return state.list;
-};*/
+};

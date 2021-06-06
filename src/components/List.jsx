@@ -1,11 +1,11 @@
 import ListItem from './ListItem';
 // import React, { useState } from 'react';
-//import { filteredListSelector } from '../Selectors';
+import { filteredListSelector } from '../Store';
 import { useSelector } from 'react-redux';
 //import { connect } from 'react-redux';
 
 export default function List() {
-  const list = useSelector(state => state.list);
+  const list = useSelector(filteredListSelector);
   // const [mark] = useState(false);
   if (list.length === 0) {
     return 'List is empty';
