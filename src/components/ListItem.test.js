@@ -2,7 +2,7 @@ import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import ListItem from './ListItem';
 import { ACTION_TYPES } from '../Store';
-import { makeTestStore,testRender} from "../setupTests";
+import { makeTestStore, testRender } from '../setupTests';
 
 const id = 123;
 const task = 'random text';

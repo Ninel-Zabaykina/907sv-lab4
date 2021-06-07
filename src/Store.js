@@ -2,11 +2,19 @@ export const ACTION_TYPES = {
   ADD: 'add',
   DELETE: 'del',
   CHECKED: 'checked',
-  FILTER: 'filter'
+  FILTER: 'filter',
+  FILTER_RADIO: 'filter_radio'
 };
+export const SELECT_TYPES = {
+  ALL: '0',
+  DONE: '1',
+  NOT_DONE: '2'
+};
+
 export const initialState = {
   list: [],
-  filterChecked: false
+  // filterChecked: false
+  filterChecked: '0'
 };
 
 export const SET_FILTER = 'SET_FILTER';
@@ -52,6 +60,9 @@ export default function reducer(prevState = initialState, action) {
       console.log(action);
       return { ...prevState, filterChecked: !prevState.filterChecked };
     }
+    case ACTION_TYPES.FILTER_RADIO: {
+      return { ...prevState, filterChecked: action.payload };
+    }
     default:
       return prevState;
   }
@@ -60,8 +71,10 @@ export default function reducer(prevState = initialState, action) {
 export const setFilter = filter => ({ type: SET_FILTER, payload: { filter } });
 
 export const filteredListSelector = state => {
-  if (state.filterChecked) {
+  if (state.filterChecked === SELECT_TYPES.DONE) {
     return state.list.filter(item => item.isChecked);
+  } else if (state.filterChecked === SELECT_TYPES.NOT_DONE) {
+    return state.list.filter(item => !item.isChecked);
   }
   return state.list;
 };
