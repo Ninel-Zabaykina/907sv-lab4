@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ACTION_TYPES } from '../Store';
 import { connect } from 'react-redux';
 
 function Form() {
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
+  const list = useSelector(state => state);
 
   function handleSubmitInner(e) {
     e.preventDefault();
     if (value === '') return;
+    for (let le in list.list) {
+      if (list.list[le].title.toLowerCase().trim() === value.toLowerCase().trim()) {
+        return;
+      }
+    }
+
     setValue('');
 
     dispatch({

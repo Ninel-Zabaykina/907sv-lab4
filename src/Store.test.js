@@ -91,7 +91,7 @@ test('Селектор будет формировать массив элеме
   expect(result.length).toEqual(3);
 });
 
-test ('check of searchbar action', () => {
+test('check of searchbar action', () => {
   const action = {
     type: ACTION_TYPES.SEARCHBAR,
     payload: 'testik'

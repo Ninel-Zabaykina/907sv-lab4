@@ -27,7 +27,6 @@ export const SET_FILTER = 'SET_FILTER';
 export default function reducer(prevState = initialState, action) {
   switch (action.type) {
     case ACTION_TYPES.ADD: {
-      console.log(action);
       const newEl = {
         id: Math.random().toString(),
         title: action.payload,
