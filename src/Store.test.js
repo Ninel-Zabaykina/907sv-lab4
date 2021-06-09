@@ -58,48 +58,6 @@ describe('Check  Store.js', () => {
     list = reducer(checkedAction, list);
     expect(list[0].isChecked).toBeTruthy();
   });
-
-  /*test('Check filter', () => {
-    const testData = [
-      {
-        id: '123',
-        title: 'test text1',
-        isChecked: true
-      },
-      {
-        id: '456',
-        title: 'test text2',
-        isChecked: false
-      },
-      {
-        id: '789',
-        title: 'test text3',
-        isChecked: true
-      }
-    ];
-    const expectedAction = {
-      type: ACTION_TYPES.FILTER,
-      payload: selector
-    };
-    expect(filter(SELECTOR_TYPES.DONE)).toEqual(expectedAction);
-  });
-
-  const addAction = {
-    type: ACTION_TYPES.ADD,
-    payload: 'wash car'
-  };
-  let list = reducer(addAction, []);
-  list = reducer(addAction, list);
-
-  const checkAction = {
-    type: ACTION_TYPES.CHECKED,
-    payload: list[1].id
-  };
-  list = reducer(checkAction, list);
-
-  const filList = filteredList({ list: list, mark: true });
-  expect(filList.length).toEqual(1);
-  expect(filList[0].id).toEqual(list[1].id);*/
 });
 
 const state_do = {
@@ -125,10 +83,19 @@ const state_do = {
 
 test('Экшен store.dispatch({ type: ACTION_TYPES.FILTER }) будет менять состояние фильтра в сторе', () => {
   const expectationState = reducer(undefined, { type: ACTION_TYPES.FILTER });
-  expect(expectationState.filterChecked).toBe(true);
+  expect(expectationState.filterChecked).toBe(false);
 });
 
 test('Селектор будет формировать массив элементов с учётом текущего состояния стора.', () => {
   const result = filteredListSelector(state_do);
-  expect(result.length).toEqual(2);
+  expect(result.length).toEqual(3);
+});
+
+test ('check of searchbar action', () => {
+  const action = {
+    type: ACTION_TYPES.SEARCHBAR,
+    payload: 'testik'
+  };
+  const state = reducer(undefined, action);
+  expect(state.filter.searchBar).toBe(action.payload);
 });

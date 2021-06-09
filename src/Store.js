@@ -3,7 +3,8 @@ export const ACTION_TYPES = {
   DELETE: 'del',
   CHECKED: 'checked',
   FILTER: 'filter',
-  FILTER_RADIO: 'filter_radio'
+  FILTER_RADIO: 'filter_radio',
+  SEARCHBAR: 'search_bar'
 };
 export const SELECT_TYPES = {
   ALL: '0',
@@ -13,8 +14,8 @@ export const SELECT_TYPES = {
 
 export const initialState = {
   list: [],
-  // filterChecked: false
-  filterChecked: '0'
+  filterChecked: '0',
+  searchBar: ''
 };
 
 export const SET_FILTER = 'SET_FILTER';
@@ -63,6 +64,9 @@ export default function reducer(prevState = initialState, action) {
     case ACTION_TYPES.FILTER_RADIO: {
       return { ...prevState, filterChecked: action.payload };
     }
+    case ACTION_TYPES.SEARCHBAR: {
+      return { ...prevState, searchBar: action.payload };
+    }
     default:
       return prevState;
   }
@@ -71,10 +75,16 @@ export default function reducer(prevState = initialState, action) {
 export const setFilter = filter => ({ type: SET_FILTER, payload: { filter } });
 
 export const filteredListSelector = state => {
+  let some_selected = state.list;
   if (state.filterChecked === SELECT_TYPES.DONE) {
-    return state.list.filter(item => item.isChecked);
+    some_selected = state.list.filter(item => item.isChecked);
   } else if (state.filterChecked === SELECT_TYPES.NOT_DONE) {
-    return state.list.filter(item => !item.isChecked);
+    some_selected = state.list.filter(item => !item.isChecked);
   }
-  return state.list;
+  if (state.searchBar !== '') {
+    some_selected = some_selected.filter(
+      item => item.title.toLowerCase().indexOf(state.searchBar) >= 0
+    );
+  }
+  return some_selected;
 };

@@ -23,16 +23,19 @@ function App() {
     console.log(mark);
     console.log(event.target.value);
     console.log('RR3', list);
-    // console.log('RRR', list);
     dispatch({
       type: ACTION_TYPES.FILTER_RADIO,
       payload: event.target.value.toString()
     });
   };
 
-  // function onChangeValue(event) {
-  //   console.log(event.target.value);
-  // }
+  const handleTextSearch = event => {
+    console.log(event.target.value);
+    dispatch({
+      type: ACTION_TYPES.SEARCHBAR,
+      payload: event.target.value.toString().toLowerCase().trim()
+    });
+  };
 
   const dispatch = useDispatch();
 
@@ -76,6 +79,14 @@ function App() {
     );
   }
 
+  function TextSearch() {
+    return (
+      <div>
+        <input type="text" onChange={handleTextSearch} value={list.searchBar} />
+      </div>
+    );
+  }
+
   return (
     <>
       <div>
@@ -92,6 +103,7 @@ function App() {
       />
       <div>
         <DoneRadio />
+        <TextSearch />
         <label style={{ display: 'none' }}>
           Done:
           <Done />
